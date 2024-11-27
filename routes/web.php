@@ -94,6 +94,8 @@ Route::get('/dashboard/events', function () {
     return view('events');
 })->middleware(['auth', 'verified'])->name('events');
 
+//--------------------------------------------------------------------------------------------------------------------------------
+
 //偉人管理
 Route::get('/dashboard/greatmanaged', [GreatController::class, 'index'])
     ->middleware(['auth', 'verified'])->name('greatmanaged');
@@ -108,6 +110,20 @@ Route::put('/greatmanaged/{id}', [GreatController::class, 'update'])
 //偉人削除
 Route::delete('/greatmanaged/{id}', [GreatController::class, 'destroy'])
     ->name('greatmanaged.delete');
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+//クイズ一覧
+Route::get('/dashboard/quiz', function () {
+    return view('quiz');
+})->middleware(['auth', 'verified'])->name('quiz');
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+//アクセス一覧
+Route::get('/dashboard/access', function () {
+    return view('access');
+})->middleware(['auth', 'verified'])->name('access');
     
 
 
