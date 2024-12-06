@@ -46,9 +46,9 @@
         <!-- Register Button -->
         @if (Route::has('register'))
             <x-primary-button class="ms-3">
-            <a href="{{ route('register') }}">
-                {{ __('Register') }}
-            </a>
+                <a href="{{ route('register') }}">
+                    {{ __('Register') }}
+                </a>
             </x-primary-button>
         @endif
     </div>
