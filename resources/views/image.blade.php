@@ -17,19 +17,31 @@
                             @csrf
                             <div class="mb-16">
                                 <label for="prompt">プロンプトID</label><br>
-                                <select name="id" id="promptid" class="border-2 bg-blue-200 text-gray-900 dark:bg-gray-800 dark:text-gray-100 " required>
+                                <select name="id" id="select-id" class="border-2 bg-blue-200 text-gray-900 dark:bg-gray-800 dark:text-gray-100" required>
                                     <option value="0">IDを選択</option>
-                                    @foreach($prompt as $prompt)
-                                        <!-- valueを$prompt->idに変更 -->
-                                        <option value="{{ $prompt->id }}">{{ $prompt->id }}</option>
+                                    @foreach($prompt as $item)
+                                    <option value="{{ $item->id }}" data-prompt="{{ $item->prompt }}" data-negative_prompt="{{ $item->negative_prompt }}" data-steps="{{ $item->step }}">{{ $item->id }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <!-- 取得したデータを下に表示 -->
-                            <div class="mt-8" id="selected-data" data-prompt-id="{{ $prompt->id }}">
-                                <h3>選択されたデータ</h3>
-                                
+                            <div class="mt-8 bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">選択されたデータ</h3>
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div class="flex items-center">
+                                        <span class="font-semibold text-gray-600 dark:text-gray-300 w-1/4">プロンプト:</span>
+                                        <span id="data-prompt" class="text-gray-900 dark:text-gray-100">選択されていません</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="font-semibold text-gray-600 dark:text-gray-300 w-1/4">ネガティブプロンプト:</span>
+                                        <span id="data-vegative_prompt" class="text-gray-900 dark:text-gray-100">選択されていません</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="font-semibold text-gray-600 dark:text-gray-300 w-1/4">ステップ数:</span>
+                                        <span id="data-steps" class="text-gray-900 dark:text-gray-100">選択されていません</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <button type="submit" class="mt-16 border border-blue-500 text-blue-500 font-semibold py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
@@ -41,32 +53,32 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('promptid').addEventListener('change', function() {
-            var promptId = this.value;
-
-            // AJAXリクエストを送信
-            fetch(`/dashboad/image/${promptId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // 取得したデータを表示
-                    if (data && !data.error) {
-                        document.getElementById('selected-data').innerHTML = `
-                            <h3>選択されたデータ</h3>
-                            <p>ID: ${data.id}</p>
-                            <p>ステップ数: ${data.steps}</p>
-                            <p>その他の情報: ${data.other_info}</p>  <!-- 例えば、'other_info'がプロンプトに関連するデータの場合 -->
-                        `;
-                    } else {
-                        document.getElementById('selected-data').innerHTML = `<p>データが見つかりませんでした。</p>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('selected-data').innerHTML = `<p>エラーが発生しました。</p>`;
-                });
-        });
-    </script>
-    
 </x-app-layout>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectElement = document.getElementById('select-id');
+        const promptElement = document.getElementById('data-prompt');
+        const negativePromptElement = document.getElementById('data-vegative_prompt');
+        const stepsElement = document.getElementById('data-steps');
+
+        if (!selectElement || !promptElement) {
+            console.error('必須要素が見つかりません。');
+            return;
+        }
+
+        selectElement.addEventListener('change', (event) => {
+            const selectedOption = event.target.options[event.target.selectedIndex];
+
+            const prompt = selectedOption.getAttribute('data-prompt') || 'データなし';
+            promptElement.textContent = prompt;
+
+            const negativePrompt = selectedOption.getAttribute('data-negative_prompt') || 'データなし';
+            negativePromptElement.textContent = negativePrompt;
+
+            const steps = selectedOption.getAttribute('data-steps') || 'データなし';
+            stepsElement.textContent = steps;
+        });
+    });
+</script>
