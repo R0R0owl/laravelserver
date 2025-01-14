@@ -93,6 +93,8 @@ Route::delete('/prompts/{id}', [PromptsController::class, 'destroy'])
 //表示
 Route::get('/dashboard/image', [ImageController::class, 'index'])
     ->name('image.index');
+Route::post('/dashboard/image', [ImageController::class, 'store'])
+    ->name('image.store');
 
 Route::get('/dashboard/image/{id}', [ImageController::class, 'getPromptData']);
 

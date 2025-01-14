@@ -50,7 +50,25 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // バリデーションルールを定義
+        $request->validate([
+            'id' => 'required|integer|min:1'
+        ], [
+            // カスタムエラーメッセージ
+            'id.required' => 'IDを選択してください。'
+        ]);
+        // フォームデータを取得
+        $id = $request->input('id');
+        $selectedPrompt = $request->input('selected_prompt');
+        $selectedNegativePrompt = $request->input('selected_negative_prompt');
+        $selectedSteps = $request->input('selected_steps');
+        
+        // 正常な場合の処理
+        return response()->json([
+            'message' => 'データが正常に送信されました！',
+            'data' => $request->all(),
+        ]);
     }
 
     /**

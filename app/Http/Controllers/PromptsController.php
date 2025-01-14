@@ -7,7 +7,7 @@ use App\Models\Prompts;
 
 class PromptsController extends Controller
 {
-    /**
+    /*
      * プロンプト一覧表示
      */
     public function index()
