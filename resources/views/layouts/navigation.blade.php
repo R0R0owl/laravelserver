@@ -52,6 +52,12 @@
                         {{ __('アクセス閲覧') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('access')" :active="request()->routeIs('image')">
+                        {{ __('画像生成') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

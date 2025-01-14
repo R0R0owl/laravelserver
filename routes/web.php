@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromptsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GreatController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 //管理画面表示
@@ -86,6 +87,17 @@ Route::post('/settings', [SettingsController::class, 'update'])
 //プロンプト削除
 Route::delete('/prompts/{id}', [PromptsController::class, 'destroy'])
     ->name('prompts.destroy');
+
+//-------------------------------------------------------------------------------------------------------------------------------
+//イラスト作成
+//表示
+Route::get('/dashboard/image', [ImageController::class, 'index'])
+    ->name('image.index');
+
+Route::get('/dashboard/image/{id}', [ImageController::class, 'getPromptData']);
+
+
+
 
 //-------------------------------------------------------------------------------------------------------------------------------
 
