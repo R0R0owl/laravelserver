@@ -11,7 +11,7 @@ class GreatManaged extends Model
 {
     use HasFactory;
 
-    protected $table = 'greatmanaged';
+    protected $table = 'greatmanageds';
 
     protected $fillable =['name', 'year', 'lastyear'];
 
