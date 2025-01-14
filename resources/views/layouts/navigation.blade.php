@@ -54,7 +54,11 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+<<<<<<< HEAD
                     <x-nav-link :href="route('access')" :active="request()->routeIs('image')">
+=======
+                    <x-nav-link :href="route('image.index')" :active="request()->routeIs('image.index')">
+>>>>>>> f90c2b197d7e9a5f71f1e15abf875c006bbc56e6
                         {{ __('画像生成') }}
                     </x-nav-link>
                 </div>
