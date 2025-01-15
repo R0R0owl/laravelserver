@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Models\Prompts; 
 
 class ImageController extends Controller
@@ -13,7 +14,9 @@ class ImageController extends Controller
     public function index()
     {
         $prompt = Prompts::all();
-        return view('image', compact('prompt'));
+        $images = session('images', []); // セッションから画像を取得
+    
+        return view('image', compact('images', 'prompt'));
     }
 
     //動的データ取得用
@@ -50,56 +53,39 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-
-        // バリデーションルールを定義
+        // バリデーション
         $request->validate([
             'id' => 'required|integer|min:1'
         ], [
-            // カスタムエラーメッセージ
-            'id.required' => 'IDを選択してください。'
+            'id.required' => 'IDを選択してください。',
         ]);
-        // フォームデータを取得
+    
+        // フォームデータの取得
         $id = $request->input('id');
         $selectedPrompt = $request->input('selected_prompt');
         $selectedNegativePrompt = $request->input('selected_negative_prompt');
         $selectedSteps = $request->input('selected_steps');
-        
-        // 正常な場合の処理
-        return response()->json([
-            'message' => 'データが正常に送信されました！',
-            'data' => $request->all(),
+    
+        // APIリクエスト
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post('http://10.42.112.8:32766/sdapi/v1/txt2img', [
+            'prompt' => $selectedPrompt,
+            'negative_prompt' => $selectedNegativePrompt,
+            'step' => $selectedSteps,
         ]);
-    }
+    
+        // レスポンスから画像取得
+        $images = $response->json('image');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if (!empty($images)) {
+            session()->flash('images', $images);
+        }
+      
+        // リダイレクト
+        return redirect()->route('image.index');
+        // return $response;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-}
+    
+} 

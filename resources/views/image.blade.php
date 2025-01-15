@@ -53,6 +53,7 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             <!-- 非表示で値を保持 -->
                             <input type="hidden" name="selected_prompt" id="hidden-prompt" value="">
                             <input type="hidden" name="selected_negative_prompt" id="hidden-negative_prompt" value="">
@@ -76,6 +77,17 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- 画像が生成された場合に表示 -->
+                            @if(session('images'))
+                                <div class="mt-8">
+                                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">生成された画像</h3>
+                                    @foreach(session('images') as $image)
+                                        <img src="{{ $image }}" alt="Generated Image" class="mb-4 rounded-lg shadow-md">
+                                    @endforeach
+                                </div>
+                            @endif
+
                             <button type="submit" class="mt-16 border border-blue-500 text-blue-500 font-semibold py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                                 画像を生成する
                             </button>
@@ -87,6 +99,7 @@
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
+                                </div>
                             @endif
                         </form>
                     </div>
