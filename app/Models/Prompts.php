@@ -25,8 +25,8 @@ class Prompts extends Model
     public static function rules()
     {
         return [
-            'prompt' => 'required|string|max:1000',
-            'negative_prompt' => 'required|string|max:1000',
+            'prompt' => 'required|string|max:2500',
+            'negative_prompt' => 'required|string|max:2500',
             'steps' => 'required|integer|min:20|max:50',
         ];
     }

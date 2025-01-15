@@ -83,7 +83,7 @@
                                 <div class="mt-8">
                                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">生成された画像</h3>
                                     @foreach(session('images') as $image)
-                                        <img src="{{ $image }}" alt="Generated Image" class="mb-4 rounded-lg shadow-md">
+                                        <img src="data:image/png;base64, {{ $image }}" alt="Generated Image" class="mb-4 rounded-lg shadow-md">
                                     @endforeach
                                 </div>
                             @endif

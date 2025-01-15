@@ -76,7 +76,7 @@ class ImageController extends Controller
         ]);
     
         // レスポンスから画像取得
-        $images = $response->json('image');
+        $images = $response->json('images');
 
         if (!empty($images)) {
             session()->flash('images', $images);
