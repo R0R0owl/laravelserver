@@ -11,7 +11,7 @@ class ImageGenerationController extends Controller
         // プロンプト取得
         $prompt = $request->input('prompt');
         $negative_prompt = $request->imput('negative_prompt');
-       $steps = $request->input('steps');
+        $steps = $request->input('steps');
 
         //stable diffusion APIのURL
         $stable_diffusion_url = 'http://10.42.112.8:32766/sdapi/v1/txt2imgg';

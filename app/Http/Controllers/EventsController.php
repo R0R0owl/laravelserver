@@ -19,7 +19,7 @@ class EventsController extends Controller
      */
     public function create()
     {
-        //jfiejfo
+        //j
     }
 
     /**
