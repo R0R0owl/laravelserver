@@ -45,6 +45,7 @@
                         <form action="{{ route('image.store') }}" method="POST" class="py-8">
                             @csrf
                             <div class="mb-16">
+                                
                                 <label for="prompt">プロンプトID</label><br>
                                 <select name="id" id="select-id" class="border-2 bg-blue-200 text-gray-900 dark:bg-gray-800 dark:text-gray-100" required>
                                     <option value="0">IDを選択</option>
